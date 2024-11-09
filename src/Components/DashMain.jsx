@@ -20,7 +20,18 @@ const DashMain = () => (
                 <div className='bg-yellow-300 h-[30%] rounded-3xl'>
                     <Image src="/images/premium-bg.png" className="w-full h-full" alt="Logo" width={1800} height={700} />
                 </div>
-                <div className='bg-white h-[70%] rounded-3xl'></div>
+                <div className='bg-white h-[70%] rounded-3xl p-4'>
+                    <div className='flex justify-between items-center'>
+                        <div className='font-bold'>Previous Sessions</div>
+                        <button className='text-[#1678FB]'>See all</button>
+                    </div>
+                    <div className="w-full h-[3rem] border flex">
+                        <div className='w-[25%] h-full border'></div>
+                        <div className='w-[25%] h-full border'></div>
+                        <div className='w-[25%] h-full border'></div>
+                        <div className='w-[25%] h-full border'></div>
+                    </div>
+                </div>
             </div>
             <div className='bg-white rounded-3xl w-[30%]'></div>
         </div>
