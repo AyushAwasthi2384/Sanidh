@@ -11,8 +11,10 @@ export async function POST(req) {
         return new Response(JSON.stringify({ message: 'User already exists' }), { status: 409 });
     }
 
+    const newName= `${firstName} ${lastName}`;
+
     const hashedPassword = await hashPassword(password);
-    const newUser = await User.create({ email, password: hashedPassword, name: `${firstName} ${lastName}` });
+    const newUser = await User.create({ email, password: hashedPassword, name: newName });
 
     return new Response(JSON.stringify({ message: 'User created successfully', userId: newUser._id }), { status: 200 });
 }
