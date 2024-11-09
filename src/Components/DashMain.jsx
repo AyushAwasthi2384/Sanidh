@@ -10,7 +10,7 @@ import { IoIosArrowForward } from "react-icons/io";
 // import { Line, LineChart } from 'recharts';
 import { GoDotFill } from "react-icons/go";
 const BPChart = dynamic(() => import('../components/BPChart'), { ssr: false });
-
+import { BsArrowUpRightCircleFill } from "react-icons/bs";
 
 
 function DashMain() {
@@ -127,9 +127,44 @@ function DashMain() {
                     </div>
                     <BPChart bpdata={bpdata} />
                 </div>
-                <div className='flex flex-col gap-[1rem] rounded-3xl w-1/4'>
+                {/* <div className='flex flex-col gap-[1rem] rounded-3xl w-1/4'>
                     <div className='bg-white h-2/3 rounded-3xl w-full'></div>
                     <div className='bg-white h-1/3 rounded-3xl w-full'></div>
+                </div> */}
+                <div className='flex flex-col gap-[1rem] rounded-3xl w-1/4'>
+                    <div className='text-left bg-white h-2/3 rounded-3xl w-full '>
+                        <div className="bg-white p-6 rounded-3xl text-center">
+                            <div className="flex justify-left rounded-3xl items-baseline" >
+                                <div className="flex justify-left items-baseline space-x-1 ">
+                                    <div className="text-6xl font-bold text-blue-500" style={{ fontSize: '4.1rem' }}>1</div>
+                                    <div className="text-6xl font-bold text-gray-500">/</div>
+                                    <div className="text-6xl font-bold text-gray-500">3</div>
+                                </div>.
+                            </div>
+                            <div className="mt-4 text-base font-medium whitespace-nowrap flex justify-left" style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Free Sessions Has Been Used</div>
+                        </div>
+                    </div>
+
+
+                    {/* <div className='bg-white h-1/3 rounded-3xl w-full'>  */}
+                    <div className="flex items-center justify-center rounded-3xl h-1/3 bg-blue-100">
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-full px-4 " padding-left="10px">
+                            <div className="text-left ml-3">
+                                <div className="text-0xl">Start  A</div>
+
+                                <div className="item-top flex justify-between">
+                                    <div className="text-2xl font-bold">New Session</div>
+                                    <div className="flex justify-between padding: 10px 20px vertical-align: middle justify-content: space-between">
+                                        <BsArrowUpRightCircleFill size={35} />
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    {/* </div> */}
+
+
+
                 </div>
             </div>
             <div className='flex gap-[1rem] h-[65%]'>
@@ -188,7 +223,7 @@ function DashMain() {
                         </div>
                     </div>
                     <div className='p-3 bg-[#F2F6FE] h-[88%] rounded-2xl'>
-                        {selectedSession && selectedSession?.report}
+                        {selectedSession?.report}
                     </div>
                 </div>
             </div>
