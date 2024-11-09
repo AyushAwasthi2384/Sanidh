@@ -10,10 +10,10 @@ const TopNavbar = ({ route, userName }) => {
                 <div className='text-[2rem] font-bold'>
                     {route}
                 </div>
-                <div className='search h-[2.5rem] rounded-xl w-[30rem] bg-white flex items-center gap-[1rem] px-[1rem]'>
+                {/* <div className='search h-[2.5rem] rounded-xl w-[30rem] bg-white flex items-center gap-[1rem] px-[1rem]'>
                     <IoSearch size={25} />
                     <input className='w-full outline-none' type="text" placeholder="Search" />
-                </div>
+                </div> */}
             </div>
             <div className='flex items-center gap-[1rem]'>
                 <div className='flex items-center gap-[.5rem]'>

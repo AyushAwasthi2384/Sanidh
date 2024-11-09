@@ -4,16 +4,27 @@ import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Logging in with", { email, password });
-        // Add login logic here
+        try {
+            const data = { email: email, password: password };
+            const response = await axios.post("/api/auth/login", data);
+            if (response.status === 200) {
+                window.location.href = '/dashboard';
+            }
+            console.log("Signup success:", response.data);
+        } catch (err) {
+            // setError("Error signing up. Please try again.");
+            console.error("Signup error:", err);
+        }
     };
 
     return (
@@ -40,7 +51,7 @@ export default function Login() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-2 mt-2 border rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                            className="w-full px-4 py-2 mt-2 border text-black rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
                             placeholder="Enter your email"
                         />
                     </div>
@@ -51,7 +62,7 @@ export default function Login() {
                                 type={showPassword ? "text" : "password"}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full px-4 py-2 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none"
+                                className="w-full px-4 py-2 rounded-xl text-black focus:ring-2 focus:ring-blue-500 outline-none"
                                 placeholder="Enter your password"
                             />
                             <div className="flex items-center cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
