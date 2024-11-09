@@ -40,7 +40,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className="content ml-[7rem] h-full p-[1rem]">
+            <div className="content ml-[6rem] h-full p-[1rem]">
                 {curContent === 0 &&
                     <DashMain />
                 }
