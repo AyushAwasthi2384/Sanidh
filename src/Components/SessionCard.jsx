@@ -19,7 +19,7 @@ function SessionCard({ session, index }) {
             <div className='w-[25%] h-full text-[#40464C] flex items-center justify-between px-[1rem] gap-[1rem]'>
                 {session?.createdAt}
                 <div className='cursor-pointer'>
-                    <HiDotsHorizontal size={25} />
+                    <HiDotsHorizontal size={25} /> 
                 </div>
             </div>
         </div>
