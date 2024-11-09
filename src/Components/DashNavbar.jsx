@@ -12,7 +12,7 @@ const DashNavbar = (curContent, setCurContent) => {
     const [isOpen, setIsOpen] = useState(curContent);
 
     return (
-        <div className="flex fixed w-[15rem] h-full justify-between p-5 bg-white rounded-r-3xl pt-[3rem]">
+        <div className="flex fixed w-[5rem] h-full justify-between p-5 bg-white rounded-r-3xl pt-[3rem]">
             <div className='flex flex-col'>
                 <div className="flex items-center gap-[.5rem] text-gray-900 border-b py-4">
                     <Image src="/images/cat-user.jpg" className="w-[3rem] h-[3rem] rounded-full border-2 border-black" alt="Logo" width={200} height={200} />
@@ -25,19 +25,19 @@ const DashNavbar = (curContent, setCurContent) => {
                     <div className='text-gray-400 text-[.8rem]'>MAIN</div>
                     <div className={`flex items-center cursor-pointer gap-[1rem] text-gray-900 rounded-lg p-4 w-full ${isOpen === 0 ? "bg-gray-100" : ""}`}>
                         <RxDashboard size={20} />
-                        Dashboard
+                        {/* Dashboard */}
                     </div>
                     <div className={`flex items-center cursor-pointer gap-[1rem] text-gray-900 rounded-lg p-4 w-full ${isOpen === 1 ? "bg-gray-100" : ""}`}>
                         <IoDocumentTextOutline size={20} />
-                        Sessions
+                        {/* Sessions */}
                     </div>
                     <div className={`flex items-center cursor-pointer gap-[1rem] text-gray-900 rounded-lg p-4 w-full ${isOpen === 2 ? "bg-gray-100" : ""}`}>
                         <IoWalletOutline size={20} />
-                        Payments
+                        {/* Payments */}
                     </div>
                     <div className={`flex items-center cursor-pointer gap-[1rem] text-gray-900 rounded-lg p-4 w-full ${isOpen === 3 ? "bg-gray-100" : ""}`}>
                         <GoBell size={20} />
-                        Contact Us
+                        {/* Contact Us */}
                     </div>
                 </div>
             </div>
