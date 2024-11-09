@@ -6,14 +6,11 @@ import Image from 'next/image';
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
 import { FaUser, FaLock, FaClock } from "react-icons/fa";
 import SessionCard from './SessionCard';
-// import { BsArrowUpRightCircle } from "react-icons/bs";
-import { BsArrowUpRightCircleFill } from "react-icons/bs";
-
 import { IoIosArrowForward } from "react-icons/io";
 // import { Line, LineChart } from 'recharts';
 import { GoDotFill } from "react-icons/go";
 const BPChart = dynamic(() => import('../components/BPChart'), { ssr: false });
-
+import { BsArrowUpRightCircleFill } from "react-icons/bs";
 
 
 function DashMain() {
@@ -79,12 +76,9 @@ function DashMain() {
 
     return (
         <div className='h-full flex flex-col gap-[1rem]'>
-            <div className='min-h-[7%]'>
+            <div>
                 <TopNavbar route={"Overview"} userName={"Ayush Awasthi"} />
             </div>
-            <div className='flex gap-[1rem] min-h-[35%]'>
-                <div className='bg-white rounded-3xl w-3/4'></div>
-                <div className='bg-white rounded-3xl w-3/4'></div>
             <div className='flex gap-[1rem] h-[35%]'>
                 <div className='bg-white rounded-3xl flex gap-[1rem] w-3/4 p-4'>
                     <div className='w-[40%] rounded-2xl h-full overflow-hidden border'>
@@ -133,15 +127,19 @@ function DashMain() {
                     </div>
                     <BPChart bpdata={bpdata} />
                 </div>
+                {/* <div className='flex flex-col gap-[1rem] rounded-3xl w-1/4'>
+                    <div className='bg-white h-2/3 rounded-3xl w-full'></div>
+                    <div className='bg-white h-1/3 rounded-3xl w-full'></div>
+                </div> */}
                 <div className='flex flex-col gap-[1rem] rounded-3xl w-1/4'>
                     <div className='text-left bg-white h-2/3 rounded-3xl w-full '>
                         <div className="bg-white p-6 rounded-3xl text-center">
                             <div className="flex justify-left rounded-3xl items-baseline" >
-                            <div className="flex justify-left items-baseline space-x-1 ">
-                                <div className="text-6xl font-bold text-blue-500" style={{ fontSize: '4.1rem'}}>1</div>
-                                <div className="text-6xl font-bold text-gray-500">/</div>
-                                <div className="text-6xl font-bold text-gray-500">3</div>
-                            </div>.
+                                <div className="flex justify-left items-baseline space-x-1 ">
+                                    <div className="text-6xl font-bold text-blue-500" style={{ fontSize: '4.1rem' }}>1</div>
+                                    <div className="text-6xl font-bold text-gray-500">/</div>
+                                    <div className="text-6xl font-bold text-gray-500">3</div>
+                                </div>.
                             </div>
                             <div className="mt-4 text-base font-medium whitespace-nowrap flex justify-left" style={{ fontSize: '0.9rem', fontWeight: 'bold' }}>Free Sessions Has Been Used</div>
                         </div>
@@ -149,19 +147,18 @@ function DashMain() {
 
 
                     {/* <div className='bg-white h-1/3 rounded-3xl w-full'>  */}
-                    <div className="flex items-center justify-center h-screen bg-blue-100">
-                        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-2xl w-full px-4 " padding-left= "10px">
-                        <div className="text-left ml-3">
-                            <div className="text-0xl">Start  A</div>
-                            
-                        <div className="item-top flex justify-between">
-                        <div className="text-2xl font-bold">New Session</div>
-                        <div className="flex justify-between padding: 10px 20px vertical-align: middle justify-content: space-between">
-                        <BsArrowUpRightCircleFill size={35}/>
-                        </div>
-                        </div>
-                        </div>
-                            
+                    <div className="flex items-center justify-center rounded-3xl h-1/3 bg-blue-100">
+                        <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-full px-4 " padding-left="10px">
+                            <div className="text-left ml-3">
+                                <div className="text-0xl">Start  A</div>
+
+                                <div className="item-top flex justify-between">
+                                    <div className="text-2xl font-bold">New Session</div>
+                                    <div className="flex justify-between padding: 10px 20px vertical-align: middle justify-content: space-between">
+                                        <BsArrowUpRightCircleFill size={35} />
+                                    </div>
+                                </div>
+                            </div>
                         </button>
                     </div>
                     {/* </div> */}
@@ -170,10 +167,8 @@ function DashMain() {
 
                 </div>
             </div>
-            <div className='flex gap-[1rem] min-h-[55%]'>
+            <div className='flex gap-[1rem] h-[65%]'>
                 <div className={'flex flex-col gap-[1rem] w-[70%]'}>
-                    <div className='bg-yellow-300 h-[35%] rounded-3xl'>
-                        <Image src="/images/premium-bg.png" className="w-full h-full" alt="Logo" width={1800} height={700} />
                     <div className='bg-yellow-300 h-[30%] rounded-3xl relative'>
                         <Image src="/images/premium-bg.png" className="z-10 w-full h-full absolute object-cover rounded-3xl" alt="Logo" width={1800} height={700} />
                         <Image src="/images/doctor-img.png" className="z-10 h-[10rem] object-contain absolute right-[-10rem] bottom-0" alt="Logo" width={1800} height={700} />
@@ -214,18 +209,6 @@ function DashMain() {
                         </div>
                     </div>
                 </div>
-
-                
-                <div className='bg-white rounded-3xl w-[30%]'>
-                {/* <div className="w-80 p-6 bg-white rounded-lg shadow-lg">
-                <div className="flex items-center justify-center min-h-max bg-blue-100">
-                <div className="flex justify-between items-center">
-                <h2 className="text-lg font-semibold text-black">User Reports</h2>
-                </div>
-                </div>
-                </div> */}
-
-
                 <div className='bg-white rounded-3xl w-[30%] p-4'>
                     <div className='p-2 pb-4 flex justify-between items-center'>
                         <div className='font-bold'>Health Records</div>
@@ -240,7 +223,7 @@ function DashMain() {
                         </div>
                     </div>
                     <div className='p-3 bg-[#F2F6FE] h-[88%] rounded-2xl'>
-                        {selectedSession && selectedSession?.report}
+                        {selectedSession?.report}
                     </div>
                 </div>
             </div>
@@ -249,4 +232,3 @@ function DashMain() {
 };
 
 export default DashMain;
-
