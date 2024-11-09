@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-    _id: { type: Number, required: true },
+const sessionSchema = new mongoose.Schema({
+    // _id: { type: Number, required: true },
     title: { type: String, required: true },
     patientName: { type: String, required: true },
     email: { type: String, required: true },
@@ -22,14 +22,8 @@ const userSchema = new mongoose.Schema({
     recreationalDrugUse: { type: Boolean },
     constantFatigue: { type: Boolean },
     report: { type: String, required: true },
-    chatbotResponses: [
-        {
-            question: { type: String, required: true },
-            answer: { type: String, required: true }
-        }
-    ]
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
+const Session = mongoose.models.Session || mongoose.model('Session', sessionSchema);
 
-export default User;
+export default Session;
