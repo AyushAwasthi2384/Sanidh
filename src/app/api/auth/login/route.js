@@ -1,6 +1,6 @@
-import connectToDatabase from '@/utils/db';
-import User from '@/models/User';
-import { verifyPassword, generateToken } from '@/utils/auth';
+import connectToDatabase from '../../../../utils/db';
+import User from '../../../../models/User.model';
+import { verifyPassword, generateToken } from '../../../../utils/auth';
 
 export async function POST(req) {
     await connectToDatabase();
