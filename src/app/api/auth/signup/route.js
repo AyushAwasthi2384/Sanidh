@@ -4,7 +4,7 @@ import { hashPassword } from '../../../../utils/auth';
 
 export async function POST(req) {
     await connectToDatabase();
-    const { email, password, firstName, lastName } = await req.json();
+    const { email, password, firstName, lastName, phoneNumber } = await req.json();
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -14,7 +14,7 @@ export async function POST(req) {
     const newName= `${firstName} ${lastName}`;
 
     const hashedPassword = await hashPassword(password);
-    const newUser = await User.create({ email, password: hashedPassword, name: newName });
+    const newUser = await User.create({ email, password: hashedPassword, name: newName, number: phoneNumber });
 
     return new Response(JSON.stringify({ message: 'User created successfully', userId: newUser._id }), { status: 200 });
 }

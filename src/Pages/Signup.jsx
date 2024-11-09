@@ -175,10 +175,12 @@ export default function Signup() {
     const onSubmit = async (data) => {
         setError(null);
         setSuccess(null);
-
-        try {
+        try {   
             const response = await axios.post("/api/auth/signup", data);
-            setSuccess("Signup successful!");
+            if (response.status === 200) {
+                setSuccess("Signup successful!");
+                window.location.href = '/login';
+            }
             console.log("Signup success:", response.data);
         } catch (err) {
             setError("Error signing up. Please try again.");
@@ -253,7 +255,7 @@ export default function Signup() {
                             </div>
                             <input
                                 type="text"
-                                {...register("mobile", { required: "Mobile number is required" })}
+                                {...register("phoneNumber", { required: "Mobile number is required" })}
                                 className="text-black w-full px-2 py-2"
                                 placeholder="Enter your mobile number"
                             />
