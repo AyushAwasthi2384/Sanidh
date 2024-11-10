@@ -1,5 +1,5 @@
-import connectToDatabase from '../../../utils/db';
-import Session from '../../../models/Session.model';
+import connectToDatabase from '../../../../utils/db';
+import Session from '../../../../models/Session.model';
 
 export async function GET(req) { // Find Session by ID
     await connectToDatabase();
