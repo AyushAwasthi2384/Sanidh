@@ -6,8 +6,9 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { IoWalletOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
 import Image from "next/image.js";
-import SessionMain from '../Components/SessionMain';
+import SessionMain from "../Components/SessionMain";
 import SessionStart from "../Components/SessionStart";
+import PreviousSession from "../Components/PreviousSession";
 
 const Dashboard = () => {
     const [curContent, setCurContent] = useState(0);
@@ -70,11 +71,11 @@ const Dashboard = () => {
                 {curContent === 0 && (
                     <DashMain curContent={curContent} setCurContent={setCurContent} />
                 )}
-                {/* {curContent === 1 && (
-                    <SessionStart curContent={curContent} setCurContent={setCurContent} />
-                )} */}
                 {curContent === 1 && (
-                    <SessionMain />
+                    <SessionStart curContent={curContent} setCurContent={setCurContent} />
+                )}
+                {curContent === 2 && (
+                    <PreviousSession />
                 )}
             </div>
         </div>
