@@ -1292,8 +1292,8 @@ ${AI_QUESTIONS.find(q => q.id === parseInt(id)).question}
                                     Start your session with Sanidh
                                 </h2>
                                 <h4 className="flex items-center justify-center h-10">
-                                    Hi there! 👋 I'm SANIDH, your AI medical assistant, here to provide you with quick, reliable health information and
-                                    <br /> support. Let's take a step toward better health together! 😊
+                                    Hi there! 👋 I&apos;m SANIDH, your AI medical assistant, here to provide you with quick, reliable health information and
+                                    <br /> support. Let&apos;s take a step toward better health together! 😊
                                 </h4>
                             </div>
                         </div>

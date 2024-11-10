@@ -126,7 +126,7 @@ export default function Login() {
                         Login
                     </button>
                     <div className="text-center text-gray-900 mt-1">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <Link href="/signup" className="text-blue-600">
                             Signup
                         </Link>
