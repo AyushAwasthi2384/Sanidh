@@ -72,12 +72,13 @@ const Dashboard = () => {
       </div>
 
       <div className="content ml-[6rem] h-full p-[1rem]">
-        {curContent === 0 && <DashMain />}
-        {curContent === 1 && (
-          //   <SessionMain />
-          //   <SessionStart />
-          <PreviousSession />
+        {curContent === 0 && (
+          <DashMain curContent={curContent} setCurContent={setCurContent} />
         )}
+        {/* {curContent === 1 && (
+                    <SessionStart curContent={curContent} setCurContent={setCurContent} />
+                )} */}
+        {curContent === 1 && <SessionMain />}
       </div>
     </div>
   );

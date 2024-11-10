@@ -11,21 +11,38 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     console.log("Logging in with", { email, password });
+    //     try {
+    //         const data = { email: email, password: password };
+    //         const response = await axios.post("/api/auth/login", data);
+    //         if (response.status === 200) {
+    //             window.location.href = '/dashboard';
+    //         }
+    //         console.log("Signup success:", response.data);
+    //     } catch (err) {
+    //         // setError("Error signing up. Please try again.");
+    //         console.error("Signup error:", err);
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Logging in with", { email, password });
         try {
             const data = { email: email, password: password };
             const response = await axios.post("/api/auth/login", data);
+            console.log("Response from server:", response.data);
             if (response.status === 200) {
                 window.location.href = '/dashboard';
             }
-            console.log("Signup success:", response.data);
         } catch (err) {
-            // setError("Error signing up. Please try again.");
-            console.error("Signup error:", err);
+            console.error("Login error:", err.response ? err.response.data : err.message);
         }
     };
+
+
 
     return (
         <div className="flex items-center justify-center min-h-screen p-4 px-[6rem] bg-[#1f1f1f]">
@@ -109,7 +126,7 @@ export default function Login() {
                         Login
                     </button>
                     <div className="text-center text-gray-900 mt-1">
-                        Don't have an account?{" "}
+                        Don&apos;t have an account?{" "}
                         <Link href="/signup" className="text-blue-600">
                             Signup
                         </Link>

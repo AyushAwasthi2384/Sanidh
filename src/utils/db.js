@@ -14,6 +14,7 @@ if (!cached) {
 
 async function connectToDatabase() {
     if (cached.conn) {
+        console.log("Mongo Connected");
         return cached.conn;
     }
 
