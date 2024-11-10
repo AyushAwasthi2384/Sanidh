@@ -82,7 +82,7 @@ function DashMain({ curContent, setCurContent }) {
                 <div className="bg-white rounded-3xl flex gap-[1rem] w-3/4 p-4">
                     <div className="w-[40%] rounded-2xl h-full overflow-hidden border">
                         <Image
-                            src="/images/test-img.png"
+                            src="/images/test-img2.jpeg"
                             className="w-full h-full object-cover"
                             alt="Logo"
                             width={1800}
