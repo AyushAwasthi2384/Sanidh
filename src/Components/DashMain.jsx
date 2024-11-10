@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import TopNavbar from "./TopNavbar";
 import Image from "next/image";
@@ -36,32 +36,62 @@ function DashMain({ curContent, setCurContent }) {
         { date: "2024-11-07", systolic: 132, diastolic: 87 },
     ];
 
-    const sessions = [
-        {
-            _id: 1,
-            title: "Session 1",
-            patientName: "Ayush Awasthi",
-            email: "ayush2384@gmail.com",
-            createdAt: "2024-11-09",
-            report: "The report was normal.",
-        },
-        {
-            _id: 2,
-            title: "Session 2",
-            patientName: "Shivansh Srivastava",
-            email: "shivanshwa@gmail.com",
-            createdAt: "2024-11-09",
-            report: "The report was normal.",
-        },
-        {
-            _id: 3,
-            title: "Session 3",
-            patientName: "Ayush Awasthi",
-            email: "ayushawasthi2384@gmail.com",
-            createdAt: "2024-11-09",
-            report: "The report was normal.",
-        },
-    ];
+    // const sessions = [
+    //     {
+    //         _id: 1,
+    //         title: "Session 1",
+    //         patientName: "Ayush Awasthi",
+    //         email: "ayush2384@gmail.com",
+    //         createdAt: "2024-11-09",
+    //         report: "The report was normal.",
+    //     },
+    //     {
+    //         _id: 2,
+    //         title: "Session 2",
+    //         patientName: "Shivansh Srivastava",
+    //         email: "shivanshwa@gmail.com",
+    //         createdAt: "2024-11-09",
+    //         report: "The report was normal.",
+    //     },
+    //     {
+    //         _id: 3,
+    //         title: "Session 3",
+    //         patientName: "Ayush Awasthi",
+    //         email: "ayushawasthi2384@gmail.com",
+    //         createdAt: "2024-11-09",
+    //         report: "The report was normal.",
+    //     },
+    // ];
+
+    const [sessions, setSessions] = useState([]);
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        const getSessions = async () => {
+            try {
+                const response = await axios.get('/api/session');
+                if (response.status === 200)
+                    setSessions(response?.data);
+            }
+            catch (err) {
+                console.log("LO AGYA ERROR: " + err.message);
+            }
+        }
+        getSessions();
+    }, []);
+
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const response = await axios.get('/api/auth/user/id', { userId: "672fad857b04adef64fac3eb" });
+                if(response.status === 200)
+                    setUser(response.data);
+            }
+            catch (err) {
+                console.log(err.message);
+            }
+        }
+    }, [])
 
     const curUser = {
         name: "Ayush Awasthi",

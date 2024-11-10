@@ -1,3 +1,6 @@
+import User from '../../../../../models/User.model'
+import connectToDatabase from '../../../../../utils/db';
+
 export async function GET(req) {
     await connectToDatabase();
     const { userId } = req.json();

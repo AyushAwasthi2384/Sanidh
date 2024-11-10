@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
     gender: { type: String, enum: ['Male', 'Female', 'Other'] },
     height: { type: Number },
     location: { type: String },
+    sessions: { type: Number, enum: [0, 1, 2, 3], default: 0 },
     bloodSugarLevel: { type: Number },
     BP: {
         diastolic: { type: Number },
@@ -30,6 +31,6 @@ const userSchema = new mongoose.Schema({
     ]
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export default User;

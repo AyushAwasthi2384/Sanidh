@@ -5,6 +5,7 @@ import SessionCard from "./SessionCard";
 import { FaClock, FaLock, FaUser } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image";
+import axios from "axios";
 
 function PreviousSession() {
   // const sessions = [
@@ -34,10 +35,21 @@ function PreviousSession() {
   //   },
   // ];
 
-  const [sessions, setSessions] = useState();
+  const [sessions, setSessions] = useState([]);
+
   useEffect(() => {
-    
-  },[])
+    const getSessions = async () => {
+      try {
+        const response = await axios.get('/api/session');
+        if(response.status === 200)
+            setSessions(response?.data);
+      }
+      catch (err) {
+        console.log("LO AGYA ERROR: "+ err.message);
+      }
+    }
+    getSessions();
+  },[]);
 
   return (
     <div className="h-full flex flex-col gap-[1rem]">
