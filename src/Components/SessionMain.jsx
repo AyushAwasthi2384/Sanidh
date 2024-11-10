@@ -1168,7 +1168,6 @@ const SessionMain = () => {
             // const analysis = await analyzeHealthData();
             setHealthReport(finalReport);
 
-            // Add analysis to chat
             setChatHistory(prev => [...prev, {
                 type: 'ai',
                 message: finalReport
@@ -1236,33 +1235,26 @@ ${AI_QUESTIONS.find(q => q.id === parseInt(id)).question}
             a.click();
             document.body.removeChild(a);
             window.URL.revokeObjectURL(url);
-
-            // For PDF download
             await downloadReportAsPDF(reportMarkdown, 'health-analysis-report.pdf');
         } catch (error) {
             console.error('Error downloading report:', error);
-            // Handle error appropriately
         }
     };
 
     const handleSendMessage = () => {
         if (inputValue.trim() && currentQuestionIndex < AI_QUESTIONS.length) {
-            // Save user's response
             setUserResponses(prev => ({
                 ...prev,
                 [AI_QUESTIONS[currentQuestionIndex].id]: inputValue.trim()
             }));
 
-            // Add user's message to chat
             setChatHistory(prev => [...prev, {
                 type: 'user',
                 message: inputValue.trim()
             }]);
 
-            // Clear input
             setInputValue("");
 
-            // Move to next question after a short delay
             setTimeout(() => {
                 const nextIndex = currentQuestionIndex + 1;
                 if (nextIndex < AI_QUESTIONS.length) {
