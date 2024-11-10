@@ -8,6 +8,7 @@ import { GoBell } from "react-icons/go";
 import Image from "next/image.js";
 import SessionMain from "../Components/SessionMain";
 import SessionStart from "../Components/SessionStart";
+import PreviousSession from "../Components/PreviousSession";
 
 const Dashboard = () => {
   const [curContent, setCurContent] = useState(0);
@@ -73,8 +74,9 @@ const Dashboard = () => {
       <div className="content ml-[6rem] h-full p-[1rem]">
         {curContent === 0 && <DashMain />}
         {curContent === 1 && (
-          <SessionMain />
+          //   <SessionMain />
           //   <SessionStart />
+          <PreviousSession />
         )}
       </div>
     </div>
