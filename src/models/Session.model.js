@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 
 const sessionSchema = new mongoose.Schema({
-    // _id: { type: Number, required: true },
-    title: { type: String, required: true },
+    title: { type: String, required: false },
     patientName: { type: String, required: true },
     email: { type: String, required: true },
     userID: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -21,7 +20,7 @@ const sessionSchema = new mongoose.Schema({
     alcoholConsumption: { type: Boolean },
     recreationalDrugUse: { type: Boolean },
     constantFatigue: { type: Boolean },
-    report: { type: String, required: true },
+    report: { type: String, required: false },
 }, { timestamps: true });
 
 const Session = mongoose.models.Session || mongoose.model('Session', sessionSchema);

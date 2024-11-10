@@ -12,7 +12,7 @@ import { GoDotFill } from "react-icons/go";
 const BPChart = dynamic(() => import("../components/BPChart"), { ssr: false });
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
 
-function DashMain() {
+function DashMain({ curContent, setCurContent }) {
     const [selectAll, setSelectAll] = useState(false);
     const [selectedSession, setSelectedSession] = useState();
     // const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}];
@@ -172,6 +172,7 @@ function DashMain() {
                         <button
                             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-full px-4 "
                             padding-left="10px"
+                            onClick={() => setCurContent(1)}
                         >
                             <div className="text-left ml-3">
                                 <div className="text-0xl">Start A</div>
