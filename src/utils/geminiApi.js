@@ -1,29 +1,59 @@
-import axios from 'axios';
+// const { GoogleGenerativeAI } = require("@google/generative-ai");
+// // const genAI = new GoogleGenerativeAI(`${process.env.GEMINI_API}`);
+// const genAI = new GoogleGenerativeAI(process.env.GEMINI_API);
+// const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-const GEMINI_API_KEY = process.env.GEMINI_API;
-const GEMINI_API_URL = process.env.GEMINI_URL;
+// export default async function fetchGeminiResponse(prompt) {
+//     prompt = prompt;
+//     const result = await model.generateContent(prompt);
+//     const response = await result.response;
+//     const text = response.text();
+//     return text;
+// }
 
-/**
- * Fetch response from Gemini API based on provided prompt.
- * @param {string} prompt - The prompt to send to the Gemini API.
- * @returns {Promise<object>} - Returns a response object from Gemini API.
- */
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import ReactMarkdown from 'react-markdown';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+
+const API_KEY = "AIzaSyACMYhse_AUCjKroRavW8qE5X34WnVVqcs"; //jan bujh ke yaha dala h
+
 export async function fetchGeminiResponse(prompt) {
     try {
-        const response = await axios.post(
-            GEMINI_API_URL,
-            { prompt, "Taking all this data, generate a report of a patient in order to guide him about his health and guide if he needs to go to a doctor and precautions before that" },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${GEMINI_API_KEY}`,
-                },
-            }
-        );
+        if (!API_KEY) {
+            throw new Error("API key not found in environment variables");
+        }
 
-        return response.data;  // Adjust based on Gemini API response structure
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+        // Modify prompt to request markdown formatting
+        const markdownPrompt = `${prompt}\n\nPlease provide the response in markdown format with proper headings, lists, and emphasis where appropriate. Keep it within 100 words.`;
+        
+        const result = await model.generateContent(markdownPrompt);
+        const response = await result.response;
+        return response.text();
     } catch (error) {
-        console.error("Error fetching Gemini response:", error);
-        throw new Error("Failed to fetch response from Gemini API");
+        console.error("Configuration Error:", error);
+        throw error;
     }
 }
+
+// Function to download report as PDF
+export const downloadReportAsPDF = async (reportContent, filename = 'health-report.pdf') => {
+    try {
+        const element = document.getElementById('report-content');
+        const canvas = await html2canvas(element);
+        const imgData = canvas.toDataURL('image/png');
+        
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(filename);
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        throw error;
+    }
+};
