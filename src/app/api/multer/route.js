@@ -30,50 +30,92 @@
 
 
 
-import multer from "multer";
-import nextConnect from "next-connect";
+// import multer from "multer";
+// import {nextConnect} from "next-connect";
 
-// Set up Multer storage
+// // Set up Multer storage
+// const storage = multer.diskStorage({
+//     destination: "public/uploads",
+//     filename: (req, file, cb) => {
+//         cb(null, `${Date.now()}-${file.originalname}`);
+//     },
+// });
+
+// const upload = multer({ storage });
+
+// // Initialize next-connect middleware
+// const handler = nextConnect({
+//     onError(error, req, res) {
+//         res.status(500).json({ error: `Error uploading file: ${error.message}` });
+//     },  
+//     onNoMatch(req, res) {
+//         res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+//     },
+// });
+
+// // Use Multer to handle the single file upload under the field name `file`
+// handler.use(upload.single("file"));
+
+// // Define the POST function for handling uploads
+// export async function POST(req, res) {
+//     if (req.file) {
+//         res.status(200).json({
+//             message: "File uploaded successfully",
+//             filePath: `/uploads/${req.file.filename}`,
+//         });
+//     } else {
+//         res.status(400).json({ error: "File not uploaded" });
+//     }
+// }
+
+// // Prevent Next.js from parsing this API route by setting bodyParser to false
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
+// };
+
+// // Export the handler as the default export for compatibility with next-connect
+// export default handler;
+
+
+// src/app/api/multer/route.js
+
+import multer from 'multer';
+import path from 'path';
+import { NextResponse } from 'next/server';
+
+// Configure Multer storage
 const storage = multer.diskStorage({
-    destination: "public/uploads",
+    destination: './public/uploads/',
     filename: (req, file, cb) => {
-        cb(null, `${Date.now()}-${file.originalname}`);
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        cb(null, `${file.fieldname}-${uniqueSuffix}${path.extname(file.originalname)}`);
     },
 });
 
 const upload = multer({ storage });
 
-// Initialize next-connect middleware
-const handler = nextConnect({
-    onError(error, req, res) {
-        res.status(500).json({ error: `Error uploading file: ${error.message}` });
-    },
-    onNoMatch(req, res) {
-        res.status(405).json({ error: `Method ${req.method} Not Allowed` });
-    },
-});
-
-// Use Multer to handle the single file upload under the field name `file`
-handler.use(upload.single("file"));
-
-// Define the POST function for handling uploads
-export async function POST(req, res) {
-    if (req.file) {
-        res.status(200).json({
-            message: "File uploaded successfully",
-            filePath: `/uploads/${req.file.filename}`,
-        });
-    } else {
-        res.status(400).json({ error: "File not uploaded" });
-    }
-}
-
-// Prevent Next.js from parsing this API route by setting bodyParser to false
+// Disable body parsing to use Multer
 export const config = {
     api: {
         bodyParser: false,
     },
 };
 
-// Export the handler as the default export for compatibility with next-connect
-export default handler;
+export default async function POST(req, res) {
+    if (req.method === 'POST') {
+        return new Promise((resolve, reject) => {
+            upload.single('file')(req, {}, (err) => {
+                if (err) {
+                    res.status(500).json({ error: 'File upload failed' });
+                    return reject(err);
+                }
+                res.status(200).json({ message: 'File uploaded successfully', file: req.file });
+                return resolve();
+            });
+        });
+    } else {
+        res.status(405).json({ error: `Method ${req.method} not allowed` });
+    }
+}

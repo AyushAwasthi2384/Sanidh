@@ -66,12 +66,12 @@
 
 
 
-const { ocrSpace } = require('ocr-space-api-wrapper');
+// const { ocrSpace } = require('ocr-space-api-wrapper');
 
-export default async function main() {
-    try {
-        const res2 = await ocrSpace('/images/test-img.png', { apiKey: process.env.OCR_SPACE_API });
-    } catch (error) {
-        console.error(error);
-    }
-}
+// export default async function main() {
+//     try {
+//         const res2 = await ocrSpace('/images/test-img.png', { apiKey: process.env.OCR_SPACE_API });
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }

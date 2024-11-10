@@ -70,10 +70,10 @@ const Dashboard = () => {
                 {curContent === 0 && (
                     <DashMain curContent={curContent} setCurContent={setCurContent} />
                 )}
-                {curContent === 1 && (
+                {/* {curContent === 1 && (
                     <SessionStart curContent={curContent} setCurContent={setCurContent} />
-                )}
-                {curContent === 2 && (
+                )} */}
+                {curContent === 1 && (
                     <SessionMain />
                 )}
             </div>
