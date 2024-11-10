@@ -9,7 +9,7 @@ import SessionCard from "./SessionCard";
 import { IoIosArrowForward } from "react-icons/io";
 // import { Line, LineChart } from 'recharts';
 import { GoDotFill } from "react-icons/go";
-const BPChart = dynamic(() => import("../components/BPChart"), { ssr: false });
+const BPChart = dynamic(() => import("./BPChart"), { ssr: false });
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
 
 function DashMain({ curContent, setCurContent }) {
