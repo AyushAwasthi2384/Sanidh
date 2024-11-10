@@ -91,7 +91,7 @@ function DashMain({ curContent, setCurContent }) {
                 console.log(err.message);
             }
         }
-    }, [])
+    }, []);
 
     const curUser = {
         name: "Ayush Awasthi",

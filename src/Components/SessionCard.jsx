@@ -23,6 +23,14 @@ function SessionCard({ session, index }) {
         };
     }, [popoverRef]);
 
+    function formatDate(isoDate) {
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+
     return (
         <div
             key={index}
@@ -41,7 +49,7 @@ function SessionCard({ session, index }) {
                 {session?.title}
             </div>
             <div className="w-[25%] h-full text-[#40464C] flex items-center justify-between px-[1rem] gap-[1rem]">
-                {session?.createdAt}
+                {formatDate(session?.createdAt)}
                 <button
                     className="cursor-pointer relative"
                     onClick={() => setIsPopoverOpen((pre) => !pre)}
