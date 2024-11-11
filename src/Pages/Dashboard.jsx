@@ -12,14 +12,16 @@ import PreviousSession from "../Components/PreviousSession";
 
 const Dashboard = () => {
     const [curContent, setCurContent] = useState(0);
+    const [sCount, setSCount] = useState(0);
+
     return (
         <div className="h-[100vh] bg-[#D2E9FE] text-black">
             <div className="navbar flex fixed w-[6rem] h-full justify-between p-5 bg-white rounded-r-3xl pt-[3rem]">
                 <div className="flex flex-col">
                     <div className="flex items-center justify-between gap-[.5rem] text-gray-900 border-b py-4">
                         <Image
-                            src="/images/cat-user.jpg"
-                            className="w-[3rem] h-[3rem] object-cover rounded-full border-2 border-black"
+                            src="/images/logo.png"
+                            className="w-[4rem] h-[4rem] object-cover rounded-full"
                             alt="Logo"
                             width={200}
                             height={200}
@@ -27,7 +29,7 @@ const Dashboard = () => {
 
                         {/* <IoIosArrowDown size={20} /> */}
                     </div>
-                    <div className="main mt-4 ">
+                    <div className="main mt-4">
                         <div className="text-gray-400 text-[.8rem] mb-2 text-center">
                             MAIN
                         </div>
@@ -42,7 +44,9 @@ const Dashboard = () => {
                         <div
                             className={`flex items-center cursor-pointer gap-[1rem] text-gray-900 rounded-lg p-4 w-full ${curContent === 1 ? "bg-yellow-300" : ""
                                 }`}
-                            onClick={() => setCurContent(1)}
+                            onClick={() => {
+                                sCount < 4 && setCurContent(1);
+                            }}
                         >
                             <IoDocumentTextOutline size={20} />
                             {/* Sessions */}
@@ -69,11 +73,15 @@ const Dashboard = () => {
 
             <div className="content ml-[6rem] h-full p-[1rem]">
                 {curContent === 0 && (
-                    <DashMain curContent={curContent} setCurContent={setCurContent} />
+                    <DashMain curContent={curContent} setCurContent={setCurContent} sCount={sCount} setSCount={setSCount} />
                 )}
                 {curContent === 1 && (
-                    <SessionStart curContent={curContent} setCurContent={setCurContent} />
+                    <SessionStart curContent={curContent} setCurContent={setCurContent}  />
                 )}
+                {curContent === 11 && (
+                    <SessionMain curContent={curContent} setCurContent={setCurContent} />
+                )}
+
                 {curContent === 2 && (
                     <PreviousSession />
                 )}

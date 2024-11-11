@@ -65,7 +65,8 @@ const SessionStart = ({ curContent, setCurContent }) => {
                 const response = await axios.post("/api/session", { patientName: `${formData?.firstName} ${formData.lastName}`, userID: "672fad857b04adef64fac3eb", ...formData });
                 console.log("Form submitted:", response?.data);
                 if (response?.status === 201) {
-                    setCurContent(2)
+                    localStorage.setItem('sessionID', response.data._id);
+                    setCurContent(11)
                 }
             } catch (error) {
                 console.error("Error submitting form:", error);

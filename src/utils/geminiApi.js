@@ -54,6 +54,6 @@ export const downloadReportAsPDF = async (reportContent, filename = 'health-repo
         pdf.save(filename);
     } catch (error) {
         console.error('Error generating PDF:', error);
-        throw error;
+        // throw error;
     }
 };

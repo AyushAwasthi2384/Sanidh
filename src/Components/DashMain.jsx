@@ -4,15 +4,16 @@ import dynamic from "next/dynamic";
 import TopNavbar from "./TopNavbar";
 import Image from "next/image";
 import { ImCheckboxUnchecked, ImCheckboxChecked } from "react-icons/im";
-import { FaUser, FaLock, FaClock } from "react-icons/fa";
+import { FaUser, FaLock, FaClock, FaSpinner } from "react-icons/fa";
 import SessionCard from "./SessionCard";
 import { IoIosArrowForward } from "react-icons/io";
 // import { Line, LineChart } from 'recharts';
 import { GoDotFill } from "react-icons/go";
 const BPChart = dynamic(() => import("./BPChart"), { ssr: false });
 import { BsArrowUpRightCircleFill } from "react-icons/bs";
+import axios from "axios";
 
-function DashMain({ curContent, setCurContent }) {
+function DashMain({ curContent, setCurContent, setSCount, sCount }) {
     const [selectAll, setSelectAll] = useState(false);
     const [selectedSession, setSelectedSession] = useState();
     // const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}];
@@ -65,11 +66,15 @@ function DashMain({ curContent, setCurContent }) {
 
     const [sessions, setSessions] = useState([]);
     const [user, setUser] = useState();
+    const [sessionNo, setsessionNo] = useState(1);
 
     useEffect(() => {
         const getSessions = async () => {
+            console.log("hehehe");
             try {
+                console.log("tryyy")
                 const response = await axios.get('/api/session');
+                console.log(response.data);
                 if (response.status === 200)
                     setSessions(response?.data);
             }
@@ -78,13 +83,14 @@ function DashMain({ curContent, setCurContent }) {
             }
         }
         getSessions();
+        setSCount(sessions.length);
     }, []);
 
     useEffect(() => {
         const getUser = async () => {
             try {
                 const response = await axios.get('/api/auth/user/id', { userId: "672fad857b04adef64fac3eb" });
-                if(response.status === 200)
+                if (response.status === 200)
                     setUser(response.data);
             }
             catch (err) {
@@ -181,7 +187,7 @@ function DashMain({ curContent, setCurContent }) {
                                         className="text-6xl font-bold text-blue-500"
                                         style={{ fontSize: "4.1rem" }}
                                     >
-                                        1
+                                        {sessions.length}
                                     </div>
                                     <div className="text-6xl font-bold text-gray-500">/</div>
                                     <div className="text-6xl font-bold text-gray-500">3</div>
@@ -202,7 +208,11 @@ function DashMain({ curContent, setCurContent }) {
                         <button
                             className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-3xl w-full px-4 "
                             padding-left="10px"
-                            onClick={() => setCurContent(1)}
+                            disabled={sCount > 2}
+                            onClick={() => {
+                                setCurContent(1);
+                                setsessionNo(sessionNo+1)
+                            }}
                         >
                             <div className="text-left ml-3">
                                 <div className="text-0xl">Start A</div>
@@ -254,10 +264,10 @@ function DashMain({ curContent, setCurContent }) {
                     <div className="bg-white h-[70%] rounded-3xl p-4 flex flex-col gap-[.5rem]">
                         <div className="flex justify-between items-center px-2">
                             <div className="font-bold">Previous Sessions</div>
-                            <button className="text-[#1678FB]">See all</button>
+                            <button className="text-[#1678FB]" onClick={() => setCurContent(2)}>See all</button>
                         </div>
                         <div className="w-full h-[3rem] border border-[#DDDEE0] rounded-xl flex bg-[#F2F6FE]">
-                            {/* <div className='w-[5%] h-full flex items-center justify-center'>
+                            {/* <div className='w-[5%] h-full flex i tems-center justify-center'>
                                 <div onClick={() => setSelectAll(!selectAll)} className='cursor-pointer'>
                                     {selectAll ? <ImCheckboxChecked size={20} color='#40464C' /> :
                                         <ImCheckboxUnchecked size={20} color='#40464C' />}
@@ -274,19 +284,26 @@ function DashMain({ curContent, setCurContent }) {
                             </div>
                         </div>
                         <div className="overflow-y-scroll h-[12rem]">
-                            <div className="cards flex flex-col gap-[.5rem]">
+                            {sessions.length > 0 ? (<div className="cards flex flex-col gap-[.5rem]">
                                 {sessions.map((session, index) => {
                                     return (
                                         <SessionCard key={index} index={index} session={session} />
                                     );
                                 })}
-                            </div>
+                            </div>) :
+                                <div className="flex justify-center items-center gap-3 p-4">
+                                    <FaSpinner className="animate-spin text-[#5271FF]" />
+                                    <span className="text-gray-600">
+                                        Loading Sessions Details...
+                                    </span>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
                 <div className="bg-white rounded-3xl w-[30%] p-4">
                     <div className="p-2 pb-4 flex justify-between items-center">
-                        <div className="font-bold">Health Records</div>
+                        <div className="font-bold">User Reports</div>
                         <div className="flex">
                             <select
                                 name=""
@@ -296,7 +313,7 @@ function DashMain({ curContent, setCurContent }) {
                             >
                                 {sessions.map((session, index) => {
                                     return (
-                                        <option key={index} value={session}>
+                                        <option key={index} value={session.report}>
                                             {session?.title}
                                         </option>
                                     );
@@ -305,7 +322,7 @@ function DashMain({ curContent, setCurContent }) {
                         </div>
                     </div>
                     <div className="p-3 bg-[#F2F6FE] h-[88%] rounded-2xl">
-                        {selectedSession?.report}
+                        {selectedSession || "Your reports can be seen at the end of the session, you must have downloaded it then or had a look at the time."}
                     </div>
                 </div>
             </div>
