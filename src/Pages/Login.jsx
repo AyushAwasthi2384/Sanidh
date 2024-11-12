@@ -29,12 +29,15 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        window.location.href = '/dashboard';
         console.log("Logging in with", { email, password });
         try {
             const data = { email: email, password: password };
             const response = await axios.post("/api/auth/login", data);
             console.log("Response from server:", response.data);
             if (response.status === 200) {
+                localStorage.setItem('user', response?.data);
+                console.log(response.data);
                 window.location.href = '/dashboard';
             }
         } catch (err) {

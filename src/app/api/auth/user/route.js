@@ -29,3 +29,30 @@ export async function DELETE(req) {
     await User.findByIdAndDelete(id);
     return new Response(JSON.stringify({ message: 'User deleted successfully' }), { status: 200 });
 }
+
+export async function PATCH(req) {
+    try {
+        await connectToDatabase();
+        const { id, sessions } = await req.json();
+
+        if (![0, 1, 2, 3].includes(sessions)) {
+            return new Response(JSON.stringify({ message: 'Invalid sessions value' }), { status: 400 });
+        }
+
+        // Update the sessions field in the User model
+        const updatedUser = await User.findByIdAndUpdate(
+            id,
+            { sessions },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return new Response(JSON.stringify({ message: 'User not found' }), { status: 404 });
+        }
+
+        return new Response(JSON.stringify(updatedUser), { status: 200 });
+    } catch (error) {
+        console.error("Error updating sessions field:", error);
+        return new Response(JSON.stringify({ message: 'Error updating sessions field' }), { status: 500 });
+    }
+}

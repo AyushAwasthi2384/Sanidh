@@ -1,56 +1,33 @@
-// import connectToDatabase from '../../../../utils/db';
-// import User from '../../../../models/User.model';
-// import { verifyPassword, generateToken } from '../../../../utils/auth';
-
-// export async function POST(req) {
-//     await connectToDatabase();
-//     const { email, password } = await req.json();
-
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//         return new Response(JSON.stringify({ message: 'Invalid credentials' }), { status: 401 });
-//     }
-
-//     const isValid = await verifyPassword(password, user.password);
-//     if (!isValid) {
-//         return new Response(JSON.stringify({ message: 'Invalid credentials' }), { status: 401 });   
-//     }
-
-//     const token = generateToken(user);
-//     return new Response(JSON.stringify({ message: 'Login successful', token }), { status: 200 });
-// }
-
-
-import connectToDatabase from '../../../../utils/db';
-import User from '../../../../models/User.model';
-import { verifyPassword, generateToken } from '../../../../utils/auth';
 import bcrypt from 'bcrypt';
+import connectToDatabase from '../../../../utils/db';
+import User from '../../../../models/User.model.js';
 
 export async function POST(req) {
-    await connectToDatabase();
-    const { email, password } = await req.json();
+    try {
+        await connectToDatabase();
+        const { email, password } = await req.json();
 
-    // Log incoming email and password for verification
-    console.log("Login attempt with email:", email);
+        // Find the user by email
+        const user = await User.findOne({ email });
+        
+        // Check if the user exists
+        // if (!user || !user.password) {
+        //     return new Response(JSON.stringify({ message: 'Invalid email or password' }), { status: 400 });
+        // }
 
-    const user = await User.findOne({ email });
-    console.log("User found:", user);
+        // Compare the provided password with the stored hashed password
+        const isValid = await bcrypt.compare(password, user.password);
+        console.log("Password valid:", isValid);
 
-    if (!user) {
-        return new Response(JSON.stringify({ message: 'Invalid credentials: User not found' }), { status: 401 });
+        if (!isValid) {
+            return new Response(JSON.stringify({ message: 'Invalid email or password' }), { status: 400 });
+        }
+
+        // Continue with session creation or token generation as needed
+        return new Response(JSON.stringify({ message: 'Login successful' }), { status: 200 });
+        
+    } catch (error) {
+        console.error("Error during login:", error);
+        return new Response(JSON.stringify({ message: 'Error during login' }), { status: 500 });
     }
-
-    // Verify password
-    const isValid = await bcrypt.compare(password, user.password);
-    console.log("Password valid:", isValid);
-
-    if (!isValid) {
-        return new Response(JSON.stringify({ message: 'Invalid credentials: Password mismatch' }), { status: 401 });
-    }
-
-    // Generate token
-    const token = generateToken(user);
-    console.log("Generated Token:", token);
-
-    return new Response(JSON.stringify({ message: 'Login successful', token }), { status: 200 });
 }
