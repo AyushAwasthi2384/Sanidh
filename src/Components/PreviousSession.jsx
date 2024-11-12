@@ -40,19 +40,17 @@ function PreviousSession() {
   useEffect(() => {
     const getSessions = async () => {
       try {
-        const response = await axios.get('/api/session');
-        if(response.status === 200)
-            setSessions(response?.data);
+        const response = await axios.get("/api/session");
+        if (response.status === 200) setSessions(response?.data);
+      } catch (err) {
+        console.log("LO AGYA ERROR: " + err.message);
       }
-      catch (err) {
-        console.log("LO AGYA ERROR: "+ err.message);
-      }
-    }
+    };
     getSessions();
-  },[]);
+  }, []);
 
   return (
-    <div className="h-full flex flex-col gap-[1rem]">
+    <div className="h-auto flex flex-col gap-[1rem]">
       <div>
         <TopNavbar route={"Previous Sessions"} userName={"Ayush Awasthi"} />
       </div>
