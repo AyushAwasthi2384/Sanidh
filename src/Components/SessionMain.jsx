@@ -37,7 +37,7 @@ const AI_QUESTIONS = [
     },
 ];
 
-const SessionMain = () => {
+const SessionMain = ({patientData}) => {
     const [started, setStarted] = useState(false);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [chatHistory, setChatHistory] = useState([]);
@@ -158,9 +158,8 @@ const SessionMain = () => {
         setIsAnalyzing(true);
         try {
             const finalReport = await fetchGeminiResponse(
-                `${reportData} is the data of the report of the user\n ${chatHistory} is the chat the user had with a chatbot about thier health\n | 1500 words report | Taking all this data, generate a report of a patient in order to guide him about his health and guide if he needs to go to a doctor with specialization and precautions before that, the report should be very detailed and Do not include health data and chat history`
+                `${reportData} is the data of the report and\n ${patientData} is the patient data of the user\n ${chatHistory} is the chat the user had with a chatbot about thier health\n | 3000 words report | Taking all this data, generate a report of a patient in order to guide him about his health and guide if he needs to go to a doctor with specialization and precautions before that, the report should be very detailed and Do not include health data and chat history`
             );
-            // const analysis = await analyzeHealthData();
             setHealthReport(finalReport);
 
             setChatHistory((prev) => [
@@ -215,17 +214,17 @@ const SessionMain = () => {
         if (!healthReport) return;
 
         const reportMarkdown = `# Health Analysis Report
-Generated on: ${new Date().toLocaleString()}
+        Generated on: ${new Date().toLocaleString()}
 
-${healthReport}
+        ${healthReport}
 
-## User Responses
-${Object.entries(userResponses)
-                .map(
-                    ([id, response]) => `
-### Question ${id}
-${AI_QUESTIONS.find((q) => q.id === parseInt(id)).question}
-**Answer:** ${response}
+        ## User Responses
+        ${Object.entries(userResponses)
+                        .map(
+                            ([id, response]) => `
+        ### Question ${id}
+        ${AI_QUESTIONS.find((q) => q.id === parseInt(id)).question}
+        **Answer:** ${response}
 `
                 )
                 .join("\n")}`;
@@ -295,7 +294,7 @@ ${AI_QUESTIONS.find((q) => q.id === parseInt(id)).question}
             <div>
                 <TopNavbar route={"Session"} userName={"Ayush Awasthi"} />
             </div>
-            <div className="flex gap-[1rem] items-center h-full p-0 bg-white rounded-3xl">
+            <div className="flex gap-[1rem] items-center h-full p-0 bg-white rounded-3xl overflow-hidden">
                 {!started ? (
                     <div
                         className="flex flex-col gap-[3rem]"
@@ -367,7 +366,7 @@ ${AI_QUESTIONS.find((q) => q.id === parseInt(id)).question}
                         </div>
                     </div>
                 ) : (
-                    <div className="w-full  flex flex-col">
+                    <div className="w-full  flex flex-col overflow-auto">
                         <div
                             className="w-full flex-1 flex flex-col justify-end h-full px-16 overflow-y-auto"
                             style={{ maxHeight: "calc(100vh - 250px)" }}

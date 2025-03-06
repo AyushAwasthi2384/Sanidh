@@ -13,6 +13,7 @@ import PreviousSession from "../Components/PreviousSession";
 const Dashboard = () => {
   const [curContent, setCurContent] = useState(0);
   const [sCount, setSCount] = useState(0);
+  const [patientData, setPatientData] = useState({});
 
   return (
     <div className="h-[100vh] bg-[#D2E9FE] text-black">
@@ -84,9 +85,10 @@ const Dashboard = () => {
           />
         )}
         {curContent === 1 && (
-          <SessionStart curContent={curContent} setCurContent={setCurContent} />
+          <SessionStart curContent={curContent} setCurContent={setCurContent} setPatientData={setPatientData} />
         )}
         {curContent === 2 && <PreviousSession />}
+        {curContent === 11 && <SessionMain patientData={patientData}/>}
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 
-const SessionStart = ({ curContent, setCurContent }) => {
+const SessionStart = ({ curContent, setCurContent, setPatientData }) => {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -66,8 +66,9 @@ const SessionStart = ({ curContent, setCurContent }) => {
                 console.log("Form submitted:", response?.data);
                 if (response?.status === 201) {
                     localStorage.setItem('sessionID', response.data._id);
-                    setCurContent(11)
                 }
+                setPatientData(formData);
+                setCurContent(11)
             } catch (error) {
                 console.error("Error submitting form:", error);
             }
